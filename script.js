@@ -26,42 +26,25 @@ function main() {
 
 
     leerTree(documentoXML);
-    console.log(arrayTempRepetidos[0]);
+
 
 }
 
 
-function checkRepeticion(elemento,tag){
-    if (elemento.getElementsByTagName(tag).length>1){
-        return true;
-    }
-    else {
-        return false;
-    }
-
-}
 
 function leerTree (elemento){
     var newChilds = elemento.children;
     console.log("Hijos de "+elemento.nodeName);
     for(var i=0;i<newChilds.length;i++){
         if (newChilds[i].children.length>0){
-           
-            if (checkRepeticion(elemento,newChilds[i].nodeName)){
-                var array = [];
-                array.push(childNodes[i].nodeName);
-            }
-            else {
-              
             console.log("Defino al padre AQUI "+ newChilds[i].nodeName);
             mostrarResultado.appendChild(document.createTextNode("<xs:element name=\""+newChilds[i].nodeName+"\">"));
             //escribirElementosHijos(true);
             mostrarResultado.innerHTML += "<br>";
             leerTree(newChilds[i]);
-            }
 
         }
-        else if (arrra){
+        else  {
             console.log("Defino a un hijo de "+ elemento.nodeName +" aqui " +newChilds[i].nodeName);
             mostrarResultado.appendChild(document.createTextNode("--------------<xs:element name=\""+newChilds[i].nodeName+"\" type=\"xs:string\"/>"));
             mostrarResultado.innerHTML += "<br>";

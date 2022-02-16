@@ -7,6 +7,8 @@ const sequenceVarC = document.createTextNode("</xs:sequence>");
 
 var arrayTempRepetidos = [];
 
+// comentario
+
 function main() {
     var contenidoArea = document.getElementsByTagName("textarea")[0].value;
 

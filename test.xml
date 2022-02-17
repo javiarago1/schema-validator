@@ -10,34 +10,20 @@
   </shipto>
 
   <item>
+      <holita2></holita2>
+    <holita></holita>
     <title>Hide your heart</title>
     <note>Special Edition</note>
     <quantity>1</quantity>
-    <hola></hola>
     <price>9.90</price>
   </item>
   
 
   <item>
-    <note3>Special Edition</note3>
     <title>Titulo1</title>
-    <note2>Special Edition</note2>
     <quantity>1</quantity>
     <price>10.90</price>
-
-
+    <adios></adios>
   </item>
-    
-
-  <item>
-
-    <title>Titulo1</title>
-    <note12>Special Edition</note12>
-    <quantity>1</quantity>
-    <price>10.90</price>
-
-
-  </item>
-  
 
 </shiporder>

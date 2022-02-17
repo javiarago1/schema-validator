@@ -11,15 +11,22 @@
 
   <item>
     <title>Hide your heart</title>
+    <note>Special Edition</note>
     <quantity>1</quantity>
     <price>9.90</price>
   </item>
   
+
   <item>
-    <title>Empire Burlesque</title>
-    <note>Special Edition</note>
+    <titulo2></titulo2>
+    <title>Titulo1</title>
+            <note2>Special Edition</note2>
     <quantity>1</quantity>
+        <note3>Special Edition</note3>
     <price>10.90</price>
+
+
   </item>
+  
 
 </shiporder>

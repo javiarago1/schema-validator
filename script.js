@@ -56,13 +56,6 @@ function leerTree(elemento) {
 
 
 
-function obtenerIguales(arr) {
-    return arr.shift().filter(function (v) {
-        return arr.every(function (a) {
-            return a.indexOf(v) !== -1;
-        });
-    });
-}
 
 
 function checkPadres(newChilds, elemento) {
@@ -70,13 +63,12 @@ function checkPadres(newChilds, elemento) {
     var num = array_padres.length;
     if (num > 1) {
      
-        console.log(newChilds.children[0]);
-        checkElemento(array_padres,newChilds.children[0]);
-        checkElemento(array_padres,newChilds.children[1]);
-        checkElemento(array_padres,newChilds.children[2]);
 
-        checkElemento(array_padres,newChilds.children[3]);
         
+        for (var x=0;x<newChilds.children.length;x++){
+            checkElemento(array_padres,newChilds.children[x]);
+        }
+
 
         //leerTree(array_padres[0]);
        // arrayTempRepetidos.push(newChilds.nodeName);
@@ -84,7 +76,7 @@ function checkPadres(newChilds, elemento) {
 }
 
 function checkElemento(array_padres,elementoC){
-    for (var i=1;i<array_padres.length;i++){
+    for (var i=0;i<array_padres.length;i++){
         for (var j=0;j<array_padres[i].children.length;j++){
             if (array_padres[i].children[j].nodeName==elementoC.nodeName){
                console.log("aki: "+elementoC.nodeName);

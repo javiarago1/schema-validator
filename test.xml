@@ -2,28 +2,18 @@
 
 <shiporder>
 
-  <shipto>
-    <name>Ola Nordmann</name>
-    <address>Langgt 23</address>
-    <city>4000 Stavanger</city>
-    <country>Norway</country>
-  </shipto>
-
   <item>
-      <holita2></holita2>
-    <holita></holita>
-    <title>Hide your heart</title>
-    <note>Special Edition</note>
-    <quantity>1</quantity>
-    <price>9.90</price>
+    <numeros>
+	          <numero1>722142811</numero1>
+            <numero2>655345344</numero2>
+      </numeros>
+
   </item>
-  
-
   <item>
-    <title>Titulo1</title>
-    <quantity>1</quantity>
-    <price>10.90</price>
-    <adios></adios>
+    <numeros>
+        	  <numero3>722142811</numero3>
+            <numero4>655345344</numero4>
+    </numeros>	
   </item>
 
 </shiporder>

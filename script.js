@@ -8,7 +8,6 @@ const sequenceVarC = document.createTextNode("</xs:sequence>");
 
 var arrayTempRepetidos = [];
 
-// comentario
 
 function main() {
     var contenidoArea = document.getElementsByTagName("textarea")[0].value;
@@ -53,7 +52,6 @@ function leerTree(elemento) {
 }
 
 
-
 function writeFather(elemento){
     mostrarResultado.innerHTML += "<br>";
     mostrarResultado.appendChild(document.createTextNode("<xs:element name=\"" + elemento.nodeName + "\">"));
@@ -71,7 +69,6 @@ function checkPadres(newChilds, elemento) {
     const array_padres = elemento.getElementsByTagName(newChilds.nodeName);
     var num = array_padres.length;
 
-
     if (num > 1) {
 
         var array = [];
@@ -87,7 +84,6 @@ function checkPadres(newChilds, elemento) {
         console.log("------- Array resultado ------");
 
         ponerNombres(array_padres, array, arrayTemp);
-
 
         console.log("------- Array elementos prohibidos ------");
         arrayTempRepetidos.forEach(element => console.log(element));

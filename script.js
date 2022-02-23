@@ -131,21 +131,20 @@ function ponerNombres(array_padres, array, arrayTemp) {
     mostrarResultado.innerHTML += "<br>";
     console.log("----- Final ----");
     for (var x = 0; x < array.length; x++) {
+        if (x == 0) {
+            for (var y = 0; y < array_padres.length; y++) {
+                var m = array_padres[y].getElementsByTagName(array[x])[0];
+                checkAb(array, array_padres[y].firstChild, arrayTemp[x]);
+ 
+            }
+        }
+        console.log("Elemento repetido: " + array[x]);
+        secuenciaCaso(arrayTemp[x]);
         for (var y = 0; y < array_padres.length; y++) {
             var m = array_padres[y].getElementsByTagName(array[x])[0];
-            if (x == 0) {
-                checkAr(array, m, arrayTemp[x]);
-            }
-            if (y == 0) {
-                console.log("Elemento repetido: " + array[x]);
-                secuenciaCaso(arrayTemp[x]);
-                if (arrayTemp[x].children.length>0) {
-                    console.log("Tienes hijos " + arrayTemp[x].children.length+ " el "+arrayTemp[x].nodeName);
-                }
-            }
-
             checkAb(array, m, arrayTemp[x]);
         }
+
     }
     console.log("----- Final ----");
 
@@ -184,5 +183,3 @@ function checkAr(array, m, arrayTemp) {
         arrayTempRepetidos.push(d.nodeName);
     }
 }
-
-

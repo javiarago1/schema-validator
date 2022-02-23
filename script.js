@@ -17,15 +17,12 @@ function main() {
 
     const documentoXML = parseador.parseFromString(contenidoArea, "text/xml");
 
-    //const elemento_padre = documentoXML.documentElement;
-
     /* inicializar schema */
     mostrarResultado.appendChild(document.createTextNode("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"));
     mostrarResultado.innerHTML += "<br>";
     mostrarResultado.appendChild(document.createTextNode("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">"));
     mostrarResultado.innerHTML += "<br>";
     /* inicializar schema */
-    //const array_hijos = documentoXML.documentElement.childNodes;
 
 
     leerTree(documentoXML);
@@ -40,19 +37,15 @@ function leerTree(elemento) {
         if (newChilds[i].children.length > 0) {
             if (!arrayTempRepetidos.includes(newChilds[i].nodeName)) {
                 console.log("Defino al padre AQUI " + newChilds[i].nodeName);
-                mostrarResultado.appendChild(document.createTextNode("<xs:element name=\"" + newChilds[i].nodeName + "\">"));
+                writeFather(newChilds[i]);
                 checkPadres(newChilds[i], elemento);
-                mostrarResultado.innerHTML += "<br>";
-
                 leerTree(newChilds[i]);
             }
 
         }
         else if (!arrayTempRepetidos.includes(newChilds[i].nodeName)) {
             console.log("Defino a un hijo de " + elemento.nodeName + " aqui " + newChilds[i].nodeName);
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("--------------<xs:element name=\"" + newChilds[i].nodeName + "\" type=\"xs:string\"/>"));
-            mostrarResultado.innerHTML += "<br>";
+            writeChild(newChilds[i]);
         }
     }
 
@@ -61,19 +54,17 @@ function leerTree(elemento) {
 
 
 
-function secuenciaCaso(elemento) {
-    if (elemento.nodeName = "hola") {
-        console.log("entra el elemento padre hola " + elemento.children.length);
-    }
-    if (elemento.children.length > 0) {
-        leerTree(elemento);
-    }
-    else {
-        console.log("entro aki con " + elemento.nodeName);
-        mostrarResultado.innerHTML += "<br>";
-        mostrarResultado.appendChild(document.createTextNode("--------------<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>"));
-        mostrarResultado.innerHTML += "<br>";
-    }
+function writeFather(elemento){
+    mostrarResultado.innerHTML += "<br>";
+    mostrarResultado.appendChild(document.createTextNode("<xs:element name=\"" + elemento.nodeName + "\">"));
+    mostrarResultado.innerHTML += "<br>";
+    
+}
+
+function writeChild (elemento){
+    mostrarResultado.innerHTML += "<br>";
+    mostrarResultado.appendChild(document.createTextNode("--------------<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>"));
+    mostrarResultado.innerHTML += "<br>";
 }
 
 function checkPadres(newChilds, elemento) {
@@ -102,8 +93,6 @@ function checkPadres(newChilds, elemento) {
         arrayTempRepetidos.forEach(element => console.log(element));
         console.log("------- Array elementos prohibidos ------");
 
-        //leerTree(array_padres[0]);
-        // arrayTempRepetidos.push(newChilds.nodeName);
     }
 }
 
@@ -113,7 +102,6 @@ function checkElemento(array_padres, elementoC, array, arrayTemp) {
         for (var j = 0; j < array_padres[i].children.length; j++) {
             if (array_padres[i].children[j].nodeName == elementoC.nodeName) {
                 contador++;
-                console.log("contador de repeticiones de " + elementoC.nodeName + " " + contador);
             }
         }
     }
@@ -123,23 +111,22 @@ function checkElemento(array_padres, elementoC, array, arrayTemp) {
         arrayTempRepetidos.push(elementoC.nodeName, elementoC.parentNode.nodeName);
     }
     else {
-        console.log("no hay secuencia de " + elementoC.nodeName);
+        console.log("No hay secuencia de " + elementoC.nodeName);
     }
 }
 
 function ponerNombres(array_padres, array, arrayTemp) {
-    mostrarResultado.innerHTML += "<br>";
     console.log("----- Final ----");
     for (var x = 0; x < array.length; x++) {
         if (x == 0) {
             for (var y = 0; y < array_padres.length; y++) {
                 var m = array_padres[y].getElementsByTagName(array[x])[0];
-                checkAb(array, array_padres[y].firstChild, arrayTemp[x]);
+                checkAb(array, array_padres[y].firstChild);
  
             }
         }
         console.log("Elemento repetido: " + array[x]);
-        secuenciaCaso(arrayTemp[x]);
+        writeChild(arrayTemp[x])
         for (var y = 0; y < array_padres.length; y++) {
             var m = array_padres[y].getElementsByTagName(array[x])[0];
             checkAb(array, m, arrayTemp[x]);
@@ -151,10 +138,10 @@ function ponerNombres(array_padres, array, arrayTemp) {
 }
 
 
-function checkAr(array, m, arrayTemp) {
+function checkAb(array, m) {
     var d = m;
     while (true) {
-        d = d.previousElementSibling;
+        d = d.nextElementSibling;
         if (d == null) {
             break;
         }
@@ -162,7 +149,7 @@ function checkAr(array, m, arrayTemp) {
             break;
         }
         console.log("Elemento no repetido (ocurrencia 0 o X): " + d.nodeName);
-        secuenciaCaso(d);
+        writeChild(d);
         arrayTempRepetidos.push(d.nodeName);
     }
 }

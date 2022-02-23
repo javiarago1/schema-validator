@@ -151,23 +151,6 @@ function ponerNombres(array_padres, array, arrayTemp) {
 }
 
 
-function checkAb(array, m, arrayTemp) {
-    var d = m;
-    while (true) {
-        d = d.nextElementSibling;
-        if (d == null) {
-            break;
-        }
-        else if (array.includes(d.nodeName)) {
-            break;
-        }
-        console.log("Elemento no repetido (ocurrencia 0 o X): " + d.nodeName);
-        secuenciaCaso(d);
-        arrayTempRepetidos.push(d.nodeName);
-
-    }
-}
-
 function checkAr(array, m, arrayTemp) {
     var d = m;
     while (true) {

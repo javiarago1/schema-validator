@@ -20,10 +20,12 @@
   
   <item>
     <hola3></hola3>
+        <price>9.90</price>
     <title>Hide your heart</title>
-    <quantity>1</quantity>
+
     <ktal></ktal>
-    <price>9.90</price>
+
+    <quantity>1</quantity>
 
   </item>
 </shiporder>

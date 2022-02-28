@@ -1,12 +1,12 @@
-var mostrarResultado = document.getElementById("resultado");
-const sequenceVar = document.createTextNode("<xs:sequence>");
-const sequenceVarC = document.createTextNode("</xs:sequence>");
+var addTextArea = document.getElementById("textarea2");
 
 
-
-
+function blankSpace() {
+    addTextArea.value += "\n";
+}
 
 function main() {
+
     var contenidoArea = document.getElementsByTagName("textarea")[0].value;
 
     const parseador = new DOMParser();
@@ -14,120 +14,60 @@ function main() {
     const documentoXML = parseador.parseFromString(contenidoArea, "text/xml");
 
     /* inicializar schema */
-    mostrarResultado.appendChild(document.createTextNode("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"));
-    mostrarResultado.innerHTML += "<br>";
-    mostrarResultado.innerHTML += "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
-    mostrarResultado.appendChild(document.createTextNode("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">"));
-    mostrarResultado.innerHTML += "<br>";
+
+    addTextArea.value += "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+    blankSpace();
+    addTextArea.value += "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">";
+    blankSpace();
+
+
     /* inicializar schema */
 
-    leerTree(documentoXML);
+    leerTree(documentoXML,1);
 
-    mostrarResultado.innerHTML += "<br>";
-    mostrarResultado.appendChild(document.createTextNode("</xs:schema>"));
+    addTextArea.value += "</xs:schema>";
 
 }
 
-function leerTree(elemento) {
+function leerTree(elemento,espacio) {
+
     var newChilds = elemento.children;
     console.log("Hijos de " + elemento.nodeName);
     for (var i = 0; i < newChilds.length; i++) {
         if (newChilds[i].children.length > 0) {
-                console.log("Defino al padre AQUI " + newChilds[i].nodeName);
-                var eleccion = smallCheck(newChilds[i],elemento);
-                writeFather(newChilds[i], true, eleccion);
-                writeType(0, true);
-                if (eleccion){
-                    checkPadres(newChilds[i], elemento);
-                }
-                else {
-                    writeSequence(true);
-                    leerTree(newChilds[i]);
-                    writeSequence(false);
-                }
-                writeType(0, false);
-                writeFather(0, false);
+            console.log("Defino al padre AQUI " + newChilds[i].nodeName);
+            var eleccion = smallCheck(newChilds[i], elemento);
+            writeFather(newChilds[i], true, eleccion,espacio);
+            writeType(0, true,++espacio);
+            if (eleccion) {
+                checkPadres(newChilds[i], elemento,espacio);
+            }
+            else {
+                writeSequence(true,++espacio);
+                leerTree(newChilds[i],++espacio);
+                writeSequence(false,--espacio);
+                writeType(0, false,--espacio);
+                writeFather(0, false,null,--espacio);
+            }
+
         }
-        else  {
+        else {
+        
             console.log("Defino a un hijo de " + elemento.nodeName + " aqui " + newChilds[i].nodeName);
-            writeChild(newChilds[i]);
+            writeChild(newChilds[i],espacio);
         }
     }
 
 
 }
 
-
-function writeFather(elemento, abrir, repeated) {
-    if (abrir) {
-        if (repeated) {
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("<xs:element name=\"" + elemento.nodeName + "\"  maxOccurs=\"unbounded\" minOccurs=\"0\">"));
-            mostrarResultado.innerHTML += "<br>";
-        }
-        else {
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("<xs:element name=\"" + elemento.nodeName + "\">"));
-            mostrarResultado.innerHTML += "<br>";
-        }
-    }
-    else {
-        mostrarResultado.innerHTML += "<br>";
-        mostrarResultado.appendChild(document.createTextNode("</xs:element>"));
-        mostrarResultado.innerHTML += "<br>";
+function addEspacios(espacios){
+    for (var i=0;i<espacios;i++){
+        addTextArea.value+="  ";
     }
 }
 
-function writeType(type, abrir) {
-    if (type == 0) {
-        if (abrir) {
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("<xs:complexType>"));
-            mostrarResultado.innerHTML += "<br>";
-        } else {
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("</xs:complexType>"));
-            mostrarResultado.innerHTML += "<br>";
-        }
-    }
-}
-
-function writeChild(elemento) {
-    mostrarResultado.innerHTML += "<br>";
-    mostrarResultado.appendChild(document.createTextNode("<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>"));
-    mostrarResultado.innerHTML += "<br>";
-}
-
-function writeChoice(abrir) {
-    if (abrir) {
-        mostrarResultado.innerHTML += "<br>";
-        mostrarResultado.appendChild(document.createTextNode("<xs:choice minOccurs=\"0\" maxOccurs=\"unbounded\">"));
-        mostrarResultado.innerHTML += "<br>";
-    }
-    else {
-        mostrarResultado.innerHTML += "<br>";
-        mostrarResultado.appendChild(document.createTextNode("</xs:choice>"));
-        mostrarResultado.innerHTML += "<br>";
-    }
-}
-
-function writeSequence(abrir) {
-   
-        if (abrir) {
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("<xs:sequence>"));
-            mostrarResultado.innerHTML += "<br>";
-        }
-        else {
-            mostrarResultado.innerHTML += "<br>";
-            mostrarResultado.appendChild(document.createTextNode("</xs:sequence>"));
-            mostrarResultado.innerHTML += "<br>";
-        }
-    
-}
-
-
-function smallCheck (newChilds,elemento){
+function smallCheck(newChilds, elemento) {
     const array_padres = elemento.getElementsByTagName(newChilds.nodeName);
     var num = array_padres.length;
     if (num > 1) {
@@ -135,61 +75,64 @@ function smallCheck (newChilds,elemento){
     }
 }
 
-function checkPadres(newChilds, elemento, comprobacion) {
+function checkPadres(newChilds, elemento, espacio) {
+    //addTextArea.value+=espacio;
+
     const array_padres = elemento.getElementsByTagName(newChilds.nodeName);
     var num = array_padres.length;
 
+    var array = [];
 
-        console.log(newChilds.nextElementSibling);
-        var array = [];
+    var arrayTemp = [];
 
-        var arrayTemp = [];
+    var ord = false;
 
-        var ord = false;
+    for (var x = 0; x < newChilds.children.length; x++) {
+        checkElemento(array_padres, newChilds.children[x], array, arrayTemp);
+    }
 
-        for (var x = 0; x < newChilds.children.length; x++) {
-            checkElemento(array_padres, newChilds.children[x], array, arrayTemp);
-        }
-
-        if (checkOrd(array_padres, array)) {
-            console.log("parece que la secuencia está orden");
-            ord = true;
-            writeSequence(true);
-        }
-        else {
-            console.log("parece que la secuencia no está en orden");
-            ord = false;
-            writeChoice(true);
-        }
+    if (checkOrd(array_padres, array)) {
+        console.log("parece que la secuencia está orden");
+        ord = true;
+        writeSequence(true,++espacio);
+    }
+    else {
+        console.log("parece que la secuencia no está en orden");
+        ord = false;
+        writeChoice(true,++espacio);
+    }
 
 
-        console.log("------- Array resultado ------");
-        array.forEach(element => console.log(element));
-        console.log("------- Array resultado ------");
+    console.log("------- Array resultado ------");
+    array.forEach(element => console.log(element));
+    console.log("------- Array resultado ------");
 
-        ponerNombres(array_padres, array, arrayTemp);
+    ponerNombres(array_padres, array, arrayTemp,espacio);
 
 
-        if (ord) {
-            writeSequence(false);
-        }
-        else {
-            writeChoice(false);
-        }
+    if (ord) {
+        writeSequence(false,espacio);
+    }
+    else {
+        writeChoice(false,espacio);
+    }
+    writeType(0,false,--espacio);
+    writeFather(0,false,null,--espacio);
 
-        eliminateBros(newChilds);
+
+    eliminateBros(newChilds);
 
 }
 
 
-function eliminateBros(newChilds){
+function eliminateBros(newChilds) {
     var d = newChilds;
-    while (true){
+    while (true) {
         d = d.nextElementSibling
-        if (d==null){
+        if (d == null) {
             break;
         }
-        else if (d.nodeName==newChilds.nodeName){
+        else if (d.nodeName == newChilds.nodeName) {
             d.remove();
         }
     }
@@ -230,21 +173,22 @@ function checkElemento(array_padres, elementoC, array, arrayTemp) {
     }
 }
 
-function ponerNombres(array_padres, array, arrayTemp) {
+function ponerNombres(array_padres, array, arrayTemp,espacio) {
     console.log("----- Final ----");
+    espacio++;
     for (var x = 0; x < array.length; x++) {
         if (x == 0) {
             for (var y = 0; y < array_padres.length; y++) {
                 var m = array_padres[y].getElementsByTagName(array[x])[0];
-                checkAb(array, array_padres[y].firstChild);
+                checkAb(array, array_padres[y].firstChild,espacio);
 
             }
         }
         console.log("Elemento repetido: " + array[x]);
-        writeChild(arrayTemp[x])
+        writeChild(arrayTemp[x],espacio)
         for (var y = 0; y < array_padres.length; y++) {
             var m = array_padres[y].getElementsByTagName(array[x])[0];
-            checkAb(array, m, arrayTemp[x]);
+            checkAb(array, m,espacio);
         }
 
     }
@@ -253,7 +197,7 @@ function ponerNombres(array_padres, array, arrayTemp) {
 }
 
 
-function checkAb(array, m) {
+function checkAb(array, m,espacio) {
     var d = m;
     while (true) {
         d = d.nextElementSibling;
@@ -264,7 +208,85 @@ function checkAb(array, m) {
             break;
         }
         console.log("Elemento no repetido (ocurrencia 0 o X): " + d.nodeName);
-        writeChild(d);
-
+        writeChild(d,espacio);
     }
+}
+
+
+
+function writeFather(elemento, abrir, repeated,espacio) {
+    if (abrir) {
+        if (repeated) {
+            addTextArea.value += espacio;
+            addEspacios(espacio);
+            addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\"  maxOccurs=\"unbounded\" minOccurs=\"0\">";
+            blankSpace();
+        }
+        else {
+            addTextArea.value += espacio;
+            addEspacios(espacio);
+            addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\">";
+            blankSpace();
+        }
+    }
+    else {
+        addTextArea.value += espacio;
+        addEspacios(espacio);
+        addTextArea.value += "</xs:element>";
+        blankSpace();
+    }
+}
+
+function writeType(type, abrir,espacio) {
+    if (type == 0) {
+        if (abrir) {
+            addTextArea.value += espacio;
+            addEspacios(espacio);
+            addTextArea.value += "<xs:complexType>";
+            blankSpace();
+        } else {
+            addTextArea.value += espacio;
+            addEspacios(espacio);
+            addTextArea.value += "</xs:complexType>";
+            blankSpace();
+        }
+    }
+}
+
+function writeChild(elemento,espacio) {
+    addTextArea.value+= espacio;
+    addEspacios(espacio);
+    addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>";
+    blankSpace();
+}
+
+function writeChoice(abrir,espacio) {
+    if (abrir) {
+        addTextArea.value+=espacio;
+        addEspacios(espacio);
+        addTextArea.value += "<xs:choice minOccurs=\"0\" maxOccurs=\"unbounded\">";
+        blankSpace();
+    }
+    else {
+        addTextArea.value+=espacio;
+        addEspacios(espacio);
+        addTextArea.value += "</xs:choice>";
+        blankSpace();
+    }
+}
+
+function writeSequence(abrir,espacio) {
+    if (abrir) {
+        addTextArea.value+=espacio;
+        addEspacios(espacio);
+        addTextArea.value += "<xs:sequence>";
+        blankSpace();
+    }
+    else {
+        addTextArea.value+=espacio;
+        addEspacios(espacio);
+        addTextArea.value += "</xs:sequence>";
+        blankSpace();
+    }
+
 }

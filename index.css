@@ -1,0 +1,55 @@
+body{
+    width: 80%;
+    background-color: antiquewhite;
+    margin: 0 auto;
+}
+
+.principal {
+margin: 0 auto;
+width: 80%;
+height: 90%;
+border: solid black 1px;
+background-color: aqua;
+
+}
+
+
+#cabecera{
+    text-align: center;
+    margin: 0 auto;
+    background-color: brown;
+}
+
+
+h3{
+    text-align: center;
+}
+#textarea1{
+       
+        margin-left: 15%;
+      
+}
+
+#textarea2{
+ 
+    margin-left: 15%;
+  
+}
+#boton1{
+    margin-left: 15%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    
+
+    
+}
+
+#boton2{
+    margin-left: 15%;
+    
+}
+
+#boton3{
+width: px;
+   
+}

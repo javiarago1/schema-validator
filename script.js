@@ -76,7 +76,7 @@ function smallCheck(newChilds, elemento) {
 }
 
 function checkPadres(newChilds, elemento, espacio) {
-    //addTextArea.value+=espacio;
+
 
     const array_padres = elemento.getElementsByTagName(newChilds.nodeName);
     var num = array_padres.length;
@@ -217,20 +217,20 @@ function checkAb(array, m,espacio) {
 function writeFather(elemento, abrir, repeated,espacio) {
     if (abrir) {
         if (repeated) {
-            addTextArea.value += espacio;
+    
             addEspacios(espacio);
             addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\"  maxOccurs=\"unbounded\" minOccurs=\"0\">";
             blankSpace();
         }
         else {
-            addTextArea.value += espacio;
+    
             addEspacios(espacio);
             addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\">";
             blankSpace();
         }
     }
     else {
-        addTextArea.value += espacio;
+
         addEspacios(espacio);
         addTextArea.value += "</xs:element>";
         blankSpace();
@@ -240,12 +240,12 @@ function writeFather(elemento, abrir, repeated,espacio) {
 function writeType(type, abrir,espacio) {
     if (type == 0) {
         if (abrir) {
-            addTextArea.value += espacio;
+    
             addEspacios(espacio);
             addTextArea.value += "<xs:complexType>";
             blankSpace();
         } else {
-            addTextArea.value += espacio;
+    
             addEspacios(espacio);
             addTextArea.value += "</xs:complexType>";
             blankSpace();
@@ -254,7 +254,6 @@ function writeType(type, abrir,espacio) {
 }
 
 function writeChild(elemento,espacio) {
-    addTextArea.value+= espacio;
     addEspacios(espacio);
     addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>";
     blankSpace();
@@ -262,13 +261,11 @@ function writeChild(elemento,espacio) {
 
 function writeChoice(abrir,espacio) {
     if (abrir) {
-        addTextArea.value+=espacio;
         addEspacios(espacio);
         addTextArea.value += "<xs:choice minOccurs=\"0\" maxOccurs=\"unbounded\">";
         blankSpace();
     }
     else {
-        addTextArea.value+=espacio;
         addEspacios(espacio);
         addTextArea.value += "</xs:choice>";
         blankSpace();
@@ -277,13 +274,11 @@ function writeChoice(abrir,espacio) {
 
 function writeSequence(abrir,espacio) {
     if (abrir) {
-        addTextArea.value+=espacio;
         addEspacios(espacio);
         addTextArea.value += "<xs:sequence>";
         blankSpace();
     }
     else {
-        addTextArea.value+=espacio;
         addEspacios(espacio);
         addTextArea.value += "</xs:sequence>";
         blankSpace();

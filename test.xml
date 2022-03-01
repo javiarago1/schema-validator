@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <shiporder>
+
   <shipto>
     <name>Ola Nordmann</name>
     <address>Langgt 23</address>
     <city>4000 Stavanger</city>
-    <country>Norway</country>
+    <country>
+        <asia>
+           <item2>
+              <pruebas>
+              </pruebas>
+           </item2>
+           <item2>
+              <pruebas>
+              </pruebas>
+           </item2>
+
+        </asia>
+        <europe></europe>
+    </country>
   </shipto>
   
   <item>
@@ -13,19 +27,18 @@
     <hastaluego></hastaluego>
     <title>Empire Burlesque</title>
     <note>Special Edition</note>
-        <price>10.90</price>
+    <price>10.90</price>
     <quantity>1</quantity>
 
   </item>
   
   <item>
     <hola3></hola3>
-        <price>9.90</price>
     <title>Hide your heart</title>
-
-    <ktal></ktal>
-
     <quantity>1</quantity>
-
+    <ktal></ktal>
+    <price>9.90</price>
   </item>
+
+  
 </shiporder>

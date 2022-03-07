@@ -1,7 +1,9 @@
 body{
     width: 80%;
-    background-color: antiquewhite;
+    background-color: rgb(179, 233, 240);
     margin: 0 auto;
+    background: url("fondo.jpg");
+    
 }
 
 .principal {
@@ -9,7 +11,8 @@ margin: 0 auto;
 width: 80%;
 height: 90%;
 border: solid black 1px;
-background-color: aqua;
+background-color: rgb(77, 136, 204);
+
 
 }
 
@@ -17,16 +20,22 @@ background-color: aqua;
 #cabecera{
     text-align: center;
     margin: 0 auto;
-    background-color: brown;
+    background-color: rgb(36, 52, 197);
 }
 
-
+h1{
+    color:#ffffff;
+}
 h3{
     text-align: center;
+    color:#ffffff;
 }
 #textarea1{
        
         margin-left: 15%;
+        overflow: auto;
+        resize: none;
+        white-space: nowrap
       
 }
 
@@ -34,6 +43,11 @@ h3{
     width: 700px;
     height: 750px;
     margin-left: 15%;
+    width: 65%;
+    height: 20%;
+    overflow: scroll;
+    resize: none;
+    white-space: nowrap
   
 }
 #boton1{

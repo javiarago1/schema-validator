@@ -5,12 +5,12 @@ function blankSpace() {
     addTextArea.value += "\n";
 }
 
-function limpiar(){
-    addTextArea.value="";
+function limpiar() {
+    addTextArea.value = "";
 }
 
-function checkDescarga(){
-    if (document.getElementById("boton3").checked){
+function checkDescarga() {
+    if (document.getElementById("boton3").checked) {
         var text = document.getElementById("textarea2").value;
         var filename = "schema.xsd";
         var element = document.createElement('a');
@@ -43,15 +43,16 @@ function main() {
 
     /* inicializar schema */
 
-    leerTree(documentoXML,1);
+    leerTree(documentoXML, 1);
 
     addTextArea.value += "</xs:schema>";
 
     checkDescarga();
+    console.log(documentoXML);
 
 }
 
-function leerTree(elemento,espacio) {
+function leerTree(elemento, espacio) {
 
     var newChilds = elemento.children;
     console.log("Hijos de " + elemento.nodeName);
@@ -59,32 +60,32 @@ function leerTree(elemento,espacio) {
         if (newChilds[i].children.length > 0) {
             console.log("Defino al padre AQUI " + newChilds[i].nodeName);
             var eleccion = smallCheck(newChilds[i], elemento);
-            writeFather(newChilds[i], true, eleccion,espacio);
-            writeType(0, true,++espacio);
+            writeFather(newChilds[i], true, eleccion, espacio);
+            writeType(0, true, ++espacio);
             if (eleccion) {
-                checkPadres(newChilds[i], elemento,espacio);
+                checkPadres(newChilds[i], elemento, espacio);
             }
             else {
-                writeSequence(true,++espacio);
-                leerTree(newChilds[i],++espacio);
-                writeSequence(false,--espacio);
-                writeType(0, false,--espacio);
-                writeFather(0, false,null,--espacio);
+                writeSequence(true, ++espacio);
+                leerTree(newChilds[i], ++espacio);
+                writeSequence(false, --espacio);
+                writeType(0, false, --espacio);
+                writeFather(0, false, null, --espacio);
             }
 
         }
         else {
             console.log("Defino a un hijo de " + elemento.nodeName + " aqui " + newChilds[i].nodeName);
-            writeChild(newChilds[i],espacio);
+            writeChild(newChilds[i], espacio);
         }
     }
 
 
 }
 
-function addEspacios(espacios){
-    for (var i=0;i<espacios;i++){
-        addTextArea.value+="  ";
+function addEspacios(espacios) {
+    for (var i = 0; i < espacios; i++) {
+        addTextArea.value += "  ";
     }
 }
 
@@ -111,17 +112,17 @@ function checkPadres(newChilds, elemento, espacio) {
     for (var x = 0; x < newChilds.children.length; x++) {
         checkElemento(array_padres, newChilds.children[x], array, arrayTemp);
     }
-    
+
     if (checkOrd(array_padres, array)) {
-    
+
         console.log("parece que la secuencia está orden");
         ord = true;
-        writeSequence(true,++espacio);
+        writeSequence(true, ++espacio);
     }
     else {
         console.log("parece que la secuencia no está en orden");
         ord = false;
-        writeChoice(true,++espacio);
+        writeChoice(true, ++espacio);
     }
 
 
@@ -129,17 +130,17 @@ function checkPadres(newChilds, elemento, espacio) {
     array.forEach(element => console.log(element));
     console.log("------- Array resultado ------");
 
-    ponerNombres(array_padres, array, arrayTemp,espacio);
+    ponerNombres(array_padres, array, arrayTemp, espacio, ord);
 
 
     if (ord) {
-        writeSequence(false,espacio);
+        writeSequence(false, espacio);
     }
     else {
-        writeChoice(false,espacio);
+        writeChoice(false, espacio);
     }
-    writeType(0,false,--espacio);
-    writeFather(0,false,null,--espacio);
+    writeType(0, false, --espacio);
+    writeFather(0, false, null, --espacio);
 
 
     eliminateBros(newChilds);
@@ -155,8 +156,13 @@ function eliminateBros(newChilds) {
             break;
         }
         else if (d.nodeName == newChilds.nodeName) {
+            console.log("Revisa la eliminacion -- > " + d.nodeName)
+            eliminateBros(d);
             d.remove();
+
+
         }
+        console.log("Revisa la eliminacion -- > " + d.nodeName)
     }
 
 }
@@ -195,22 +201,22 @@ function checkElemento(array_padres, elementoC, array, arrayTemp) {
     }
 }
 
-function ponerNombres(array_padres, array, arrayTemp,espacio) {
+function ponerNombres(array_padres, array, arrayTemp, espacio, ord) {
     console.log("----- Final ----");
     espacio++;
     for (var x = 0; x < array.length; x++) {
         if (x == 0) {
             for (var y = 0; y < array_padres.length; y++) {
                 var m = array_padres[y].getElementsByTagName(array[x])[0];
-                checkAb(array, array_padres[y].firstChild,espacio);
+                checkAb(array, array_padres[y].firstChild, espacio, ord);
 
             }
         }
         console.log("Elemento repetido: " + array[x]);
-        writeChild(arrayTemp[x],espacio)
+        writeChild(arrayTemp[x], espacio)
         for (var y = 0; y < array_padres.length; y++) {
             var m = array_padres[y].getElementsByTagName(array[x])[0];
-            checkAb(array, m,espacio);
+            checkAb(array, m, espacio, ord);
         }
 
     }
@@ -219,7 +225,7 @@ function ponerNombres(array_padres, array, arrayTemp,espacio) {
 }
 
 
-function checkAb(array, m,espacio) {
+function checkAb(array, m, espacio,ord) {
     var d = m;
     while (true) {
         d = d.nextElementSibling;
@@ -230,22 +236,22 @@ function checkAb(array, m,espacio) {
             break;
         }
         console.log("Elemento no repetido (ocurrencia 0 o X): " + d.nodeName);
-        writeChild(d,espacio);
+        writeChild(d, espacio, ord);
     }
 }
 
 
 
-function writeFather(elemento, abrir, repeated,espacio) {
+function writeFather(elemento, abrir, repeated, espacio) {
     if (abrir) {
         if (repeated) {
-    
+
             addEspacios(espacio);
             addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\"  maxOccurs=\"unbounded\" minOccurs=\"0\">";
             blankSpace();
         }
         else {
-    
+
             addEspacios(espacio);
             addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\">";
             blankSpace();
@@ -259,15 +265,15 @@ function writeFather(elemento, abrir, repeated,espacio) {
     }
 }
 
-function writeType(type, abrir,espacio) {
+function writeType(type, abrir, espacio) {
     if (type == 0) {
         if (abrir) {
-    
+
             addEspacios(espacio);
             addTextArea.value += "<xs:complexType>";
             blankSpace();
         } else {
-    
+
             addEspacios(espacio);
             addTextArea.value += "</xs:complexType>";
             blankSpace();
@@ -275,13 +281,20 @@ function writeType(type, abrir,espacio) {
     }
 }
 
-function writeChild(elemento,espacio) {
-    addEspacios(espacio);
-    addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>";
-    blankSpace();
+function writeChild(elemento, espacio, ord) {
+    if (!ord) {
+        addEspacios(espacio);
+        addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\"/>";
+        blankSpace();
+    }
+    else {
+        addEspacios(espacio);
+        addTextArea.value += "<xs:element name=\"" + elemento.nodeName + "\" type=\"xs:string\" minOccurs=\"0\"/>";
+        blankSpace();
+    }
 }
 
-function writeChoice(abrir,espacio) {
+function writeChoice(abrir, espacio) {
     if (abrir) {
         addEspacios(espacio);
         addTextArea.value += "<xs:choice minOccurs=\"0\" maxOccurs=\"unbounded\">";
@@ -294,7 +307,7 @@ function writeChoice(abrir,espacio) {
     }
 }
 
-function writeSequence(abrir,espacio) {
+function writeSequence(abrir, espacio) {
     if (abrir) {
         addEspacios(espacio);
         addTextArea.value += "<xs:sequence>";

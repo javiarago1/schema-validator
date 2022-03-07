@@ -1,42 +1,43 @@
 <html>
 
-    <head>
-         <link href="index.css" rel="stylesheet"  type="text/css"/>
-    </head>
+<head>
+    <link href="css/estilos.css" rel="stylesheet" type="text/css" />
+</head>
 
 <body>
     <div class="principal">
-                <div id="cabecera">
-                    <h1>GENERAR SCHEMA</h1>
-                </div>  
-                <h3>Generador de schema diseñado por la mente brillante de Javier Aragonese</h3>
-        
-         <div class="cajas">
-             <div  id="caja1">
-             
-                <textarea id="textarea1" name="textarea" rows="10" cols="70" placeholder="introduce aqui tu xml"></textarea>
+        <div id="cabecera">
+            <h1>GENERAR SCHEMA</h1>
+        </div>
+        <h3>Generador de schema diseñado por la mente brillante de Javier Aragonese</h3>
+
+        <div class="cajas">
+            <div id="caja1">
+
+                <textarea id="textarea1" name="textarea" rows="10" cols="70"
+                    placeholder="introduce aqui tu xml"></textarea>
                 <div id="boton1">
                     <button onclick="main()">Generar schema</button>
                     <input type="checkbox" id="boton3" value="descargar">Descargar
                 </div>
             </div>
-        <div  id="caja2">
+            <div id="caja2">
 
                 <textarea id="textarea2" name="textarea" rows="10" cols="70"></textarea>
-                    <p id="resultado"></p>
-                    <div id="boton2" >
-                        <button onclick="seleccionarYcopiar()">seleccionar y copiar </button>
+                <p id="resultado"></p>
+                <div id="boton2">
+                    <button onclick="seleccionarYcopiar()">seleccionar y copiar </button>
 
-                    </div>
-                    
-         </div>
-            
-                    
+                </div>
 
-      
-         </div>
-                <script src="script.js"></script>
-                <script src="boton.js"></script>
+            </div>
+
+
+
+
+        </div>
+        <script src="js/script.js"></script>
+        <script src="js/boton.js"></script>
     </div>
 </body>
 

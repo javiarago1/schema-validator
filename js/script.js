@@ -5,7 +5,27 @@ function blankSpace() {
     addTextArea.value += "\n";
 }
 
+function limpiar(){
+    addTextArea.value="";
+}
+
+function checkDescarga(){
+    if (document.getElementById("boton3").checked){
+        var text = document.getElementById("textarea2").value;
+        var filename = "schema.xsd";
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+}
+
 function main() {
+
+    limpiar();
 
     var contenidoArea = document.getElementsByTagName("textarea")[0].value;
 
@@ -26,6 +46,8 @@ function main() {
     leerTree(documentoXML,1);
 
     addTextArea.value += "</xs:schema>";
+
+    checkDescarga();
 
 }
 
@@ -52,7 +74,6 @@ function leerTree(elemento,espacio) {
 
         }
         else {
-        
             console.log("Defino a un hijo de " + elemento.nodeName + " aqui " + newChilds[i].nodeName);
             writeChild(newChilds[i],espacio);
         }
@@ -90,8 +111,9 @@ function checkPadres(newChilds, elemento, espacio) {
     for (var x = 0; x < newChilds.children.length; x++) {
         checkElemento(array_padres, newChilds.children[x], array, arrayTemp);
     }
-
+    
     if (checkOrd(array_padres, array)) {
+    
         console.log("parece que la secuencia está orden");
         ord = true;
         writeSequence(true,++espacio);

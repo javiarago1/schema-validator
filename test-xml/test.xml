@@ -6,20 +6,7 @@
     <name>Ola Nordmann</name>
     <address>Langgt 23</address>
     <city>4000 Stavanger</city>
-    <country>
-        <asia>
-           <item2>
-              <pruebas>
-              </pruebas>
-           </item2>
-           <item2>
-              <pruebas>
-              </pruebas>
-           </item2>
-
-        </asia>
-        <europe></europe>
-    </country>
+    <country>País</country>
   </shipto>
   
   <item>
@@ -27,17 +14,19 @@
     <hastaluego></hastaluego>
     <title>Empire Burlesque</title>
     <note>Special Edition</note>
-    <price>10.90</price>
+
     <quantity>1</quantity>
+        <price>10.90</price>
 
   </item>
   
   <item>
     <hola3></hola3>
     <title>Hide your heart</title>
+        <price>9.90</price>
     <quantity>1</quantity>
     <ktal></ktal>
-    <price>9.90</price>
+
   </item>
 
   

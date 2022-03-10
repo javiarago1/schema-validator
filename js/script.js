@@ -27,13 +27,17 @@ function main() {
 
     limpiar();
 
+
+    // Pasar texto a xml 
     var contenidoArea = document.getElementsByTagName("textarea")[0].value;
 
     const parseador = new DOMParser();
 
     const documentoXML = parseador.parseFromString(contenidoArea, "text/xml");
+    // Pasar texto a xml 
 
-    /* inicializar schema */
+
+    /* inicializar schema (Obligatorio) */
 
     addTextArea.value += "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
     blankSpace();
@@ -43,34 +47,32 @@ function main() {
 
     /* inicializar schema */
 
-    leerTree(documentoXML, 1);
+    leerTree(documentoXML, 1); // enviamos el documento entero y llamamos a la función
 
-    addTextArea.value += "</xs:schema>";
+    addTextArea.value += "</xs:schema>"; // cierra schema
 
-    checkDescarga();
-    console.log(documentoXML);
+    checkDescarga(); // comprueba descarga si esta marcadod checkbox y lo descarga o no
 
 }
 
 function leerTree(elemento, espacio) {
-
-    var newChilds = elemento.children;
+    var newChilds = elemento.children; // mete en variable los hijos de "elemento"
     console.log("Hijos de " + elemento.nodeName);
-    for (var i = 0; i < newChilds.length; i++) {
-        if (newChilds[i].children.length > 0) {
+    for (var i = 0; i < newChilds.length; i++) { // recorre el for de los hijos
+        if (newChilds[i].children.length > 0) { // comprueba que tenga hijos el hijo x 
             console.log("Defino al padre AQUI " + newChilds[i].nodeName);
-            var eleccion = smallCheck(newChilds[i], elemento);
-            writeFather(newChilds[i], true, eleccion, espacio);
-            writeType(0, true, ++espacio);
-            if (eleccion) {
-                checkPadres(newChilds[i], elemento, espacio);
+            var eleccion = smallCheck(newChilds[i], elemento); // true o false de si tiene hermanos iguales
+            writeFather(newChilds[i], true, eleccion, espacio); // escribe el nombre del padre (xs:element)
+            writeType(0, true, ++espacio); // tipo (complex o simple)
+            if (eleccion) { // si es true va a la funcion  de mezclar
+                checkPadres(newChilds[i], elemento, espacio); // llamamos a funcion para mezclar
             }
-            else {
-                writeSequence(true, ++espacio);
-                leerTree(newChilds[i], ++espacio);
-                writeSequence(false, --espacio);
-                writeType(0, false, --espacio);
-                writeFather(0, false, null, --espacio);
+            else { // si no es false simplemente sigue leyendo hijos
+                writeSequence(true, ++espacio); // escribe secuencia
+                leerTree(newChilds[i], ++espacio); // llama al metodo recursivo
+                writeSequence(false, --espacio); // cierra secuencia
+                writeType(0, false, --espacio); // cierra tipo
+                writeFather(0, false, null, --espacio); // cierra padre
             }
 
         }
@@ -101,9 +103,8 @@ function checkPadres(newChilds, elemento, espacio) {
 
 
     const array_padres = elemento.getElementsByTagName(newChilds.nodeName);
-    var num = array_padres.length;
 
-    var array = [];
+    var array = [];     
 
     var arrayTemp = [];
 

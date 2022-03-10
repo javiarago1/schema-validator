@@ -2,7 +2,7 @@ body{
     width: 80%;
     background-color: rgb(179, 233, 240);
     margin: 0 auto;
-    background: url("fondo.jpg");
+    background: url(fondo.jpg);
     
 }
 
@@ -66,5 +66,6 @@ h3{
 
 #boton3{
 width: px;
+color:#ffffff;
    
 }

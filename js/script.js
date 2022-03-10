@@ -10,7 +10,7 @@ function limpiar() {
 }
 
 function checkDescarga() {
-    if (document.getElementById("boton3").checked) {
+    if (document.getElementById("descargar").checked) {
         var text = document.getElementById("textarea2").value;
         var filename = "schema.xsd";
         var element = document.createElement('a');
